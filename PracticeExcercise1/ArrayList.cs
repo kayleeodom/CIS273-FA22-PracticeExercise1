@@ -36,7 +36,10 @@ namespace PracticeExercise1
         /// <summary>
         /// Returns last element in list, null if empty.
         /// </summary>
-        public int? Last { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int? Last
+        {
+            get => IsEmpty ? null : array[length - 1];
+        }
 
         /// <summary>
         /// Returns true if list is has no elements; false otherwise.
@@ -90,7 +93,16 @@ namespace PracticeExercise1
         /// <returns>Index of first element with value; -1 if element is not found</returns>
         public int FirstIndexOf(int value)
         {
-            throw new NotImplementedException();
+            foreach(int i in array)
+            {
+                if (i == value)
+                {
+                    return Array.IndexOf(array, i);
+                }
+            }
+            return Length - 1;
+            //interated through an array
+
         }
 
         // TODO
@@ -113,7 +125,22 @@ namespace PracticeExercise1
         /// <param name="index"></param>
         public void InsertAt(int value, int index)
         {
-            throw new NotImplementedException();
+            
+            if (index > Length - 1 || index < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            else
+            {
+                if (index <= array.Length - 1 || index >= 0 )
+                {
+                    Resize();
+                }
+
+                length++;
+                array[index] = value;
+                ShiftRight(index);
+            }
         }
 
         /// <summary>
@@ -159,7 +186,15 @@ namespace PracticeExercise1
         /// <param name="value">value of item to be removed</param>
         public void Remove(int value)
         {
-            throw new NotImplementedException();
+            foreach(int i in array)
+            {
+                if(i == value)
+                {
+                    ShiftLeft(i);
+                    length--;
+                }
+            }
+            //ShiftLeft(0);
         }
 
         // TODO
@@ -169,8 +204,15 @@ namespace PracticeExercise1
         /// <param name="index"></param>
         public void RemoveAt(int index)
         {
-            ShiftLeft(index);
-            length--;
+            if (index > Length - 1 || index <  0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            else
+            {
+                ShiftLeft(index);
+                length--;
+            }
         }
 
         public override string ToString()
