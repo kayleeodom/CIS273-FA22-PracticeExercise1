@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection;
+
 namespace PracticeExercise1
 {
 	public class ArrayList : IList
@@ -114,7 +116,28 @@ namespace PracticeExercise1
         /// <param name="existingValue"></param>
         public void InsertAfter(int newValue, int existingValue)
         {
-            throw new NotImplementedException();
+            //Find existingValue index
+            //Then insert new value after the existing value index
+            // when you insert something everything has to shift to the right
+            // and length has to be incremented
+            if (existingValue > Length || existingValue < 0)
+            {
+                throw new IndexOutOfRangeException();
+            }
+            // 1 - shift right starting at index
+            else
+            {
+                if (length == array.Length)
+                {
+                    Resize();
+                }
+
+                ShiftRight(existingValue);
+                // 2- write new value at index
+                //array[existingValue] = newValue;
+                // 3 - increment Length
+                length++;
+            }
         }
 
         // TODO
@@ -125,21 +148,28 @@ namespace PracticeExercise1
         /// <param name="index"></param>
         public void InsertAt(int value, int index)
         {
-            
-            if (index > Length - 1 || index < 0)
+            // 0 - Check if array list is full
+                // use from pervious code
+            // 0.5 - check range
+                // this is done within the first
+            if(index > Length || index < 0)
             {
                 throw new IndexOutOfRangeException();
             }
+            // 1 - shift right starting at index
             else
             {
-                if (index <= array.Length - 1 || index >= 0 )
+                if(length == array.Length)
                 {
                     Resize();
                 }
 
-                length++;
-                array[index] = value;
                 ShiftRight(index);
+                // 2- write new value at index
+                array[index] = value;
+                // 3 - increment Length
+                length++;
+                //ShiftRight(0);
             }
         }
 
@@ -186,15 +216,18 @@ namespace PracticeExercise1
         /// <param name="value">value of item to be removed</param>
         public void Remove(int value)
         {
-            foreach(int i in array)
+            int index = FirstIndexOf(value);
+            //RemoveAt(index);
+            if(index > 0 || index < length - 1)
             {
-                if(i == value)
-                {
-                    ShiftLeft(i);
-                    length--;
-                }
+                RemoveAt(value);
+                ShiftLeft(index);
+                length--;
             }
-            //ShiftLeft(0);
+            else
+            {
+                return;
+            }
         }
 
         // TODO
