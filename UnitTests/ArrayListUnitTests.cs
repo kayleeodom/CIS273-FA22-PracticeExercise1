@@ -162,6 +162,7 @@ namespace UnitTests
         }
 
         [TestMethod]
+
         public void TestInsertAfter()
         {
             IList list = new ArrayList();
@@ -279,7 +280,7 @@ namespace UnitTests
             Assert.AreEqual("[2,3,0,2,3,4,5,6,7,8,9]", list.ToString().Replace(" ", ""));
 
 
-            // Empty list
+            //Empty list
             list = new ArrayList();
             list.Remove(3);
             Assert.AreEqual("[]", list.ToString().Replace(" ", ""));

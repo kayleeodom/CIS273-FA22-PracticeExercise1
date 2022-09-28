@@ -19,18 +19,6 @@ namespace PracticeExercise1
         /// </summary>
         public int? First
         {
-            //get
-            //{
-            //    if (IsEmpty)
-            //    {
-            //        return null;
-            //    }
-            //    else
-            //    {
-            //        return array[0];
-            //    }
-            //}
-
             get => IsEmpty ? null : array[0];
         }
 
@@ -102,7 +90,7 @@ namespace PracticeExercise1
                     return Array.IndexOf(array, i);
                 }
             }
-            return Length - 1;
+            return -1;
             //interated through an array
 
         }
@@ -116,28 +104,21 @@ namespace PracticeExercise1
         /// <param name="existingValue"></param>
         public void InsertAfter(int newValue, int existingValue)
         {
-            //Find existingValue index
-            //Then insert new value after the existing value index
-            // when you insert something everything has to shift to the right
-            // and length has to be incremented
-            if (existingValue > Length || existingValue < 0)
-            {
-                throw new IndexOutOfRangeException();
-            }
-            // 1 - shift right starting at index
-            else
-            {
-                if (length == array.Length)
-                {
-                    Resize();
-                }
+            int index_count = 0;
 
-                ShiftRight(existingValue);
-                // 2- write new value at index
-                //array[existingValue] = newValue;
-                // 3 - increment Length
-                length++;
+            foreach (int i in array)
+            {
+                if (i == existingValue)
+                {
+                    ShiftRight(index_count);
+                    array[index_count + 1] = newValue;
+                    length++;
+                    return;
+                }
+                index_count += 1;
             }
+            Append(newValue);
+            return;
         }
 
         // TODO
@@ -217,16 +198,14 @@ namespace PracticeExercise1
         public void Remove(int value)
         {
             int index = FirstIndexOf(value);
-            //RemoveAt(index);
-            if(index > 0 || index < length - 1)
+
+            if (index == -1 || length == 0)
             {
-                RemoveAt(value);
-                ShiftLeft(index);
-                length--;
+                return;
             }
             else
             {
-                return;
+                RemoveAt(index);
             }
         }
 
@@ -250,18 +229,25 @@ namespace PracticeExercise1
 
         public override string ToString()
         {
-            string str = "[ ";
-
-            for(int i=0; i < Length-1; i++)
+            if(length > 0)
             {
-                str += array[i] + ", ";
+                string str = "[ ";
+
+                for(int i=0; i < Length-1; i++)
+                {
+                    str += array[i] + ", ";
+                }
+
+                str += array[Length - 1];
+                str += "]";
+
+                return str;
             }
 
-            str += array[Length - 1];
-            str += "]";
-
-            return str;
-
+            else
+            {
+                return "[ ]"; 
+            }
         }
 
         /// <summary>
